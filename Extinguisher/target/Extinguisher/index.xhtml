@@ -57,8 +57,9 @@
         <p:growl id="mt" showDetail="true" />
         <p:panel header="Maintenaces (select a Maintenace)">
             <p:dataTable id="main_table" var="actm" value="#{indexController.allMaintaincesByExtinguisher}" selectionMode="single" selection="#{indexController.selectedMaintenance}" rowKey="#{actm.id}">
+                <p:ajax event="rowUnselect" listener="#{indexController.onRowUnselect}" update=":maintenaces_add_form" />
                 <p:ajax event="rowSelect" listener="#{indexController.onRowSelectMaintenance}" update=":maintenaces_add_form" />
-                <!--     <p:ajax event="rowUnselect" listener="#{indexController.onRowUnselect}" update=":event_form:msgs" />-->
+                <!--     -->
                 <p:column headerText="Description">
                     <h:outputText value="#{actm.description}"></h:outputText>
                 </p:column>
@@ -72,6 +73,7 @@
         </p:panel>
     </h:form>
     <h:form id="maintenaces_add_form" >
+        <h:outputLabel  value="#{indexController.msg}"></h:outputLabel>
         <p:panel header="Maintenace adden">
             <h:outputLabel for="description" value="Description"></h:outputLabel>
             <h:inputText style="margin-left: 10px" id="description" value="#{indexController.selectedMaintenance.description}" ></h:inputText>

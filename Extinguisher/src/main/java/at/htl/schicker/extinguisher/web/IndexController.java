@@ -47,6 +47,7 @@ public class IndexController implements Serializable
     MaintenanceDao maintenanceDao;
 
     Maintenance selectedMaintenance;
+    String msg = "select a Extinguisher first";
     Long selectedMaintenanceId;
     Building selectedBuilding;
     Long selectedBuildingId;
@@ -126,6 +127,31 @@ public class IndexController implements Serializable
         if(selectedMaintenance != null && selectedExtinguisher != null) {
             maintenanceDao.update(selectedMaintenance);
         }
+        else
+        {
+            msg = "Es muss ein Extinguisher und  eine Maintenance ausgewählt sein !";
+        }
+
+    }
+    public void saveMaintenance(){
+        if(selectedMaintenance != null && selectedExtinguisher != null) {
+            if(selectedMaintenance.getId()==null) {
+                maintenanceDao.save(new Maintenance(selectedMaintenance.getDescription(),selectedMaintenance.getSolution(),selectedMaintenance.getCosts(),selectedExtinguisher));
+            }
+            else
+            {
+                msg = "Es darf keine Maintenance ausgewählt sein";
+            }
+        }
+
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Extinguisher getSelectedExtinguisher() {
@@ -193,20 +219,9 @@ public class IndexController implements Serializable
         selectedMaintenance = (Maintenance) e.getObject();
         selectedMaintenanceId = selectedMaintenance.getId();
     }
-    //endregion
-
-    /*public void onRowSelect(SelectEvent e){
-        FacesMessage msg = new FacesMessage("Event Selected", ((Event) e.getObject()).getTitle());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        selectedEvent =(Event)e.getObject();
-        selectedEventId = selectedEvent.getId();
-        System.out.println("Event:" + selectedEvent.getTitle());
-    }
     public void onRowUnselect(SelectEvent e){
-        FacesMessage msg = new FacesMessage("Event Unselected", ((Event) e.getObject()).getTitle());
+        FacesMessage msg = new FacesMessage("Maintenance Unselected", ((Maintenance) e.getObject()).getId().toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        selectedEvent =new Event();
-    }*/
-
-
+        selectedMaintenance = null;
+    }
 }
