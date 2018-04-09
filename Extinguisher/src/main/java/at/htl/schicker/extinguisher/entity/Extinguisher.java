@@ -6,16 +6,17 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-@Table
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Extinguisher.findAll", query = "select e from Extinguisher e"),
-        @NamedQuery(name = "Extinguisher.findById", query = "select e from Extinguisher e where e.id = :ID")
+        @NamedQuery(name = "Extinguisher.findById", query = "select e from Extinguisher e where e.id = :ID"),
+        @NamedQuery(name = "Extinguisher.findByBuilding", query = "select e from Extinguisher e where e.building.id = :ID")
 })
 public class Extinguisher implements Serializable
 {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     int capacity;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "extinguisher")
@@ -29,6 +30,30 @@ public class Extinguisher implements Serializable
     @JoinColumn(name = "Building_ID")
     Building building;
 
+    public Long getId() {
+        return id;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public List<Maintenance> getMaintenanceList() {
+        return maintenanceList;
+    }
+    public void addMaintenance(Maintenance m){ this.maintenanceList.add(m);
+        m.extinguisher = this;
+
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
     public Extinguisher() {
     }
 
@@ -36,6 +61,7 @@ public class Extinguisher implements Serializable
         this.capacity = capacity;
         this.customer = customer;
         this.building = building;
+        building.addExtinguisher(this);
         this.maintenanceList = new LinkedList<>();
     }
 }

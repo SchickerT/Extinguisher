@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Extinguisher:war exploded">
-    <output-path>$PROJECT_DIR$/target/Schicker</output-path>
+    <output-path>$PROJECT_DIR$/target/Extinguisher</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -48,7 +48,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/Schicker/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/Extinguisher/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Extinguisher/web/Web" />
     </root>

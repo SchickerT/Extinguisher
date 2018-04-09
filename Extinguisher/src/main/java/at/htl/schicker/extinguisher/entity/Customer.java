@@ -7,26 +7,29 @@ import java.util.List;
 
 
 @Entity
-@Table
 @NamedQueries({
         @NamedQuery(name = "Customer.findAll", query = "select c from Customer c")
 })
 public class Customer implements Serializable
 {
-    @Id
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
     String companyname;
 
-    Building building;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
+    List<Building> buildings;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     List<Extinguisher> extinguisherList;
 
-    public Building getBuilding() {
-        return building;
+    public List<Building> getAllBuilding() {
+        return buildings;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
+    public void addBuilding(Building building) {
+        this.buildings.add(building);
+        building.customer = this;
     }
 
     public List<Extinguisher> getExtinguisherList() {
@@ -41,12 +44,16 @@ public class Customer implements Serializable
         return companyname;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Customer() {
     }
 
-    public Customer(String companyname, Building building) {
+    public Customer(String companyname) {
+        this.buildings = new LinkedList<>();
         this.companyname = companyname;
-        this.building = building;
         this.extinguisherList = new LinkedList<>();
     }
 }

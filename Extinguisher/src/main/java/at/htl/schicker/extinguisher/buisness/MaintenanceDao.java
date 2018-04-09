@@ -3,12 +3,13 @@ package at.htl.schicker.extinguisher.buisness;
 import at.htl.schicker.extinguisher.entity.Building;
 import at.htl.schicker.extinguisher.entity.Maintenance;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class MaintenanceDao
 {
     @PersistenceContext
@@ -25,5 +26,10 @@ public class MaintenanceDao
 
     public Maintenance getById(Long id) {
         return (Maintenance) em.createNamedQuery("Maintenance.findById").setParameter("ID", id).getSingleResult();
+    }
+
+    public List<Maintenance> getByExtinguisher(Long id)
+    {
+        return (List<Maintenance>) em.createNamedQuery("Maintenance.findByExtinguisher").setParameter("ID", id).getResultList();
     }
 }

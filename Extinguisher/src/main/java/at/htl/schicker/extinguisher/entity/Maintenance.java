@@ -3,11 +3,11 @@ package at.htl.schicker.extinguisher.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Maintenance.findAll", query = "select m from Maintenance m"),
-        @NamedQuery(name = "Maintenance.findById", query = "select m from Maintenance m where m.id = :ID")
+        @NamedQuery(name = "Maintenance.findById", query = "select m from Maintenance m where m.id = :ID"),
+        @NamedQuery(name = "Maintenance.findByExtinguisher", query = "select m from Maintenance m where m.extinguisher.id = :ID")
 })
 public class Maintenance implements Serializable
 {
@@ -55,5 +55,6 @@ public class Maintenance implements Serializable
         this.solution = solution;
         this.costs = costs;
         this.extinguisher = extinguisher;
+        extinguisher.addMaintenance(this);
     }
 }

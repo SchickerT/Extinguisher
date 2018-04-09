@@ -3,12 +3,13 @@ package at.htl.schicker.extinguisher.buisness;
 import at.htl.schicker.extinguisher.entity.Building;
 import at.htl.schicker.extinguisher.entity.Customer;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class CustomerDao
 {
     @PersistenceContext
@@ -26,4 +27,5 @@ public class CustomerDao
     public Customer getById(Long id) {
         return (Customer) em.createNamedQuery("Customer.findById").setParameter("ID", id).getSingleResult();
     }
+
 }

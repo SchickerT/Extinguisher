@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Extinguisher</title>
+</h:head>
+
+<h:body>
+    <h:form id="customer_form">
+        <p:growl id="ct" showDetail="true" />
+        <p:panel header="Customers (select a Customer)">
+            <p:dataTable id="customer_table" var="actc" value="#{indexController.allCustomers}" selectionMode="single" selection="#{indexController.selectedCustomer}" rowKey="#{actc.id}">
+                <p:ajax event="rowSelect" listener="#{indexController.onRowSelectCustomer}" update=":building_form:building_table" />
+                <!--     <p:ajax event="rowUnselect" listener="#{indexController.onRowUnselect}" update=":event_form:msgs" />-->
+                <p:column headerText="Companyname">
+                    <h:outputText value="#{actc.companyname}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+    <h:form id="building_form">
+        <p:growl id="bt" showDetail="true" />
+        <p:panel header="Buildings (select a Building)">
+            <p:dataTable id="building_table" var="actb" value="#{indexController.allBuildingsByCustomer}" selectionMode="single" selection="#{indexController.selectedBuilding}" rowKey="#{actb.id}">
+                <p:ajax event="rowSelect" listener="#{indexController.onRowSelectBuilding}" update=":extinguisher_form:extin_table" />
+                <!--     <p:ajax event="rowUnselect" listener="#{indexController.onRowUnselect}" update=":event_form:msgs" />-->
+                <p:column headerText="Street">
+                    <h:outputText value="#{actb.street}"></h:outputText>
+                </p:column>
+                <p:column headerText="Zipcode">
+                    <h:outputText value="#{actb.zipcode}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+    <h:form id="extinguisher_form">
+        <p:growl id="et" showDetail="true" />
+        <p:panel header="Extinguishers (select a Extinguisher)">
+            <p:dataTable id="extin_table" var="acte" value="#{indexController.allExtinguisherByBuilding}" selectionMode="single" selection="#{indexController.selectedExtinguisher}" rowKey="#{acte.id}">
+                <p:ajax event="rowSelect" listener="#{indexController.onRowSelectExtinguisher}" update=":maintenaces_form:main_table" />
+                <!--     <p:ajax event="rowUnselect" listener="#{indexController.onRowUnselect}" update=":event_form:msgs" />-->
+                <p:column headerText="Extinguisher Nr.">
+                    <h:outputText value="#{acte.id}"></h:outputText>
+                </p:column>
+                <p:column headerText="Capicity">
+                    <h:outputText value="#{acte.capacity}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+    <h:form id="maintenaces_form">
+        <p:growl id="mt" showDetail="true" />
+        <p:panel header="Maintenaces (select a Maintenace)">
+            <p:dataTable id="main_table" var="actm" value="#{indexController.allMaintaincesByExtinguisher}">
+                <!--     <p:ajax event="rowUnselect" listener="#{indexController.onRowUnselect}" update=":event_form:msgs" />-->
+                <p:column headerText="Description">
+                    <h:outputText value="#{actm.description}"></h:outputText>
+                </p:column>
+                <p:column headerText="Costs">
+                    <h:outputText value="#{actm.costs}"></h:outputText>
+                </p:column>
+                <p:column headerText="Solution">
+                    <h:outputText value="#{actm.solution}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

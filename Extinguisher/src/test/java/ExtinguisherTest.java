@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @Startup
 public class ExtinguisherTest
 {
+
     @Inject
     BuildingDao buildingDao;
 
@@ -57,24 +58,9 @@ public class ExtinguisherTest
         //Extinguisher(int capacity, Customer customer, Building building)
         //Customer(String companyname, Building building)
         //---------------------------------------------------------------------------
-        Building b = new Building("4664","Lutmweg 44");
-        Building b2 = new Building("4663","Zingring 3");
-        buildingDao.save(b);
-        buildingDao.save(b2);
-        Customer c = new Customer("Test AG",b);
-        Customer c2 = new Customer("Test OG",b2);
-        customerDao.save(c);
-        customerDao.save(c2);
-        Extinguisher e = new Extinguisher(100,c,b);
-        Extinguisher e2 = new Extinguisher(120,c2,b2);
-        extinguisherDao.save(e);
-        extinguisherDao.save(e2);
-        Maintenance m = new Maintenance("Testrun1","none",1000,e);
-        Maintenance m2 = new Maintenance("Testrun2","none",2000,e);
-        Maintenance m3 = new Maintenance("Testrun3","none",230,e2);
-        maintenanceDao.save(m);
-        maintenanceDao.save(m2);
-        maintenanceDao.save(m3);
+        /*
+
+        */
 
         assertThat(buildingDao.getAll().size(),is(2));
         assertThat(customerDao.getAll().size(),is(2));
