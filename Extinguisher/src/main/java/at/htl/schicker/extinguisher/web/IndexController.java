@@ -46,6 +46,8 @@ public class IndexController implements Serializable
     @Inject
     MaintenanceDao maintenanceDao;
 
+    Maintenance selectedMaintenance;
+    Long selectedMaintenanceId;
     Building selectedBuilding;
     Long selectedBuildingId;
     Customer selectedCustomer;
@@ -56,6 +58,7 @@ public class IndexController implements Serializable
     public IndexController()
     {
         this.currBuilding = new Building();
+        this.selectedMaintenance = null;
 
         parts.add("YES");
         parts.add("NO");
@@ -104,6 +107,27 @@ public class IndexController implements Serializable
         return list;
     }
 
+    public Maintenance getSelectedMaintenance() {
+        return selectedMaintenance;
+    }
+
+    public void setSelectedMaintenance(Maintenance selectedMaintenance) {
+        this.selectedMaintenance = selectedMaintenance;
+    }
+
+    public Long getSelectedMaintenanceId() {
+        return selectedMaintenanceId;
+    }
+
+    public void setSelectedMaintenanceId(Long selectedMaintenanceId) {
+        this.selectedMaintenanceId = selectedMaintenanceId;
+    }
+    public void setMaintenance(){
+        if(selectedMaintenance != null && selectedExtinguisher != null) {
+            maintenanceDao.update(selectedMaintenance);
+        }
+    }
+
     public Extinguisher getSelectedExtinguisher() {
         return selectedExtinguisher;
     }
@@ -143,6 +167,7 @@ public class IndexController implements Serializable
     public Customer getSelectedCustomer() {return selectedCustomer;}
 
 
+
     //region RowSelect
     public void onRowSelectBuilding(SelectEvent e) {
         FacesMessage msg = new FacesMessage("Building Selected", ((Building) e.getObject()).getStreet());
@@ -161,6 +186,12 @@ public class IndexController implements Serializable
         FacesContext.getCurrentInstance().addMessage(null, msg);
         selectedExtinguisher = (Extinguisher) e.getObject();
         selectedExtinguisherId = selectedExtinguisher.getId();
+    }
+    public void onRowSelectMaintenance(SelectEvent e) {
+        FacesMessage msg = new FacesMessage("Extinguisher Selected", ((Maintenance) e.getObject()).getId().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        selectedMaintenance = (Maintenance) e.getObject();
+        selectedMaintenanceId = selectedMaintenance.getId();
     }
     //endregion
 

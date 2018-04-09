@@ -35,6 +35,10 @@ public class Maintenance implements Serializable
         return solution;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setSolution(String solution) {
         this.solution = solution;
     }

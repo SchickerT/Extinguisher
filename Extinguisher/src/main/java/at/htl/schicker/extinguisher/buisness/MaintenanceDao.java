@@ -32,4 +32,8 @@ public class MaintenanceDao
     {
         return (List<Maintenance>) em.createNamedQuery("Maintenance.findByExtinguisher").setParameter("ID", id).getResultList();
     }
+    public void update(Maintenance m)
+    {
+        em.merge(m);
+    }
 }
